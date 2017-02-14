@@ -1,6 +1,6 @@
 package me.nullchips.chipsuhc;
 
-import me.nullchips.chipsuhc.commands.Test;
+import me.nullchips.chipsuhc.commands.*;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
 import me.nullchips.chipsuhc.listeners.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
@@ -65,6 +65,12 @@ public class ChipsUHC extends JavaPlugin {
         //REGISTER COMMANDS
 
         getCommand("test").setExecutor(new Test());
+        getCommand("start").setExecutor(new Start());
+        getCommand("gmc").setExecutor(new GMC());
+        getCommand("gms").setExecutor(new GMS());
+        getCommand("clear").setExecutor(new Clear());
+        getCommand("heal").setExecutor(new Heal());
+        getCommand("feed").setExecutor(new Feed());
 
         //REGISTER LISTENERS
 

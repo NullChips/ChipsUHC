@@ -15,6 +15,7 @@ public class ChatUtils {
     private SettingsManager sm = SettingsManager.getInstance();
 
     private String prefix;
+    private String consoleMessage = ChatColor.RED + "The console cannot perform this command.";
 
     public static ChatUtils getInstance() {
         if(instance == null) {
@@ -40,5 +41,17 @@ public class ChatUtils {
         for(Player p : Bukkit.getServer().getOnlinePlayers()) {
             p.sendMessage(this.prefix + " " + message);
         }
+    }
+
+    public void noPermission(Player p) {
+        p.sendMessage(ChatColor.RED + "You don't have permission to perform this action.");
+    }
+
+    public String getConsoleMessage() {
+        return consoleMessage;
+    }
+
+    public void setConsoleMessage(String consoleMessage) {
+        this.consoleMessage = consoleMessage;
     }
 }

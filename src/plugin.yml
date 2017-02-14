@@ -6,3 +6,33 @@ main: me.nullchips.chipsuhc.ChipsUHC
 commands:
   test:
     description: A test command for testing stuff init.
+  start:
+    description: Starts the UHC game.
+  gmc:
+    description: Change gamemode to creative.
+  gms:
+    description: Change gamemode to survival.
+  clear:
+    description: Clear a player's inventory.
+    aliases: [ci]
+  heal:
+    description: Heal a player.
+  feed:
+    description: Feed a player.
+
+permissions:
+  uhc.start:
+    description: Start the UHC game.
+    default: op
+  uhc.changegamemode:
+    description: Change player's own gamemode.
+    default: op
+  uhc.clear:
+    description: Clear a player's inventory.
+    default: op
+  uhc.heal:
+    description: Heal a player.
+    default: op
+  uhc.feed:
+    description: Feed a player.
+    deafault: op
