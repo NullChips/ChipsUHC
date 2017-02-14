@@ -1,1 +1,2 @@
-message-prefix: "ChipsUHC"
+settings:
+  message-prefix: "ChipsUHC"

@@ -4,4 +4,5 @@ version: 1.0
 main: me.nullchips.chipsuhc.ChipsUHC
 
 commands:
-
+  test:
+    description: A test command for testing stuff init.

@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc;
 
+import me.nullchips.chipsuhc.commands.Test;
 import me.nullchips.chipsuhc.utils.SettingsManager;
 import me.nullchips.chipsuhc.utils.TeamUtils;
 import org.bukkit.ChatColor;
@@ -29,6 +30,8 @@ public class ChipsUHC extends JavaPlugin {
 
         settingsManager.setup(this);
 
+        settingsManager.loadConfigSettings();
+
         //ADD ALL POSSIBLE TEAM COLOURS
 
         tu.setPossibleTeamColours(new ArrayList<ChatColor>());
@@ -53,6 +56,10 @@ public class ChipsUHC extends JavaPlugin {
         tu.addPossibleTeamColour(ChatColor.UNDERLINE);
         tu.addPossibleTeamColour(ChatColor.WHITE);
         tu.addPossibleTeamColour(ChatColor.YELLOW);
+
+        //REGISTER COMMANDS
+
+        getCommand("test").setExecutor(new Test());
 
     }
 

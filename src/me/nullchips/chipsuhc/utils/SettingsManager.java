@@ -22,6 +22,8 @@ public class SettingsManager {
         return instance;
     }
 
+    private ChatUtils cu = ChatUtils.getInstance();
+
     Plugin p;
     FileConfiguration config;
     File cfile;
@@ -47,6 +49,17 @@ public class SettingsManager {
 
     public PluginDescriptionFile getDesc() {
         return p.getDescription();
+    }
+
+    public void loadConfigSettings() {
+
+        if(this.getConfig().contains("settings.message-prefix") && this.getConfig().get("settings.message-prefix") instanceof String) {
+            String prefix = this.getConfig().getString("settings.message-prefix");
+            cu.setPrefix(ChatColor.translateAlternateColorCodes('&', prefix));
+        } else {
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Message prefix cannot be found in config.yml!");
+        }
+
     }
 
 }
