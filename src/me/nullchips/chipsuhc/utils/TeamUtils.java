@@ -2,6 +2,7 @@ package me.nullchips.chipsuhc.utils;
 
 import me.nullchips.chipsuhc.teams.Team;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,15 @@ public class TeamUtils {
 
     public void removeFromTeamArray(String playerName) {
         this.inTeam.remove(playerName);
+    }
+
+    public boolean hasTeam(Player p) {
+        for(Team t : this.getAllTeams()) {
+            if (t.getMembers().contains(p.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Team> getAllTeams() {

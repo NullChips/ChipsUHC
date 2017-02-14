@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -33,5 +34,11 @@ public class ChatUtils {
 
     public void message(Player p, String message) {
         p.sendMessage(prefix + " " + ChatColor.WHITE + message);
+    }
+
+    public void broadcast(String message) {
+        for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+            p.sendMessage(this.prefix + " " + message);
+        }
     }
 }

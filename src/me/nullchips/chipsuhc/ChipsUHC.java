@@ -1,9 +1,14 @@
 package me.nullchips.chipsuhc;
 
 import me.nullchips.chipsuhc.commands.Test;
+import me.nullchips.chipsuhc.listeners.PlayerJoin;
+import me.nullchips.chipsuhc.listeners.PlayerLeave;
+import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
 import me.nullchips.chipsuhc.utils.SettingsManager;
 import me.nullchips.chipsuhc.utils.TeamUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -61,6 +66,20 @@ public class ChipsUHC extends JavaPlugin {
 
         getCommand("test").setExecutor(new Test());
 
+        //REGISTER LISTENERS
+
+        registerEvents(this, new PlayerRegainHealth());
+        registerEvents(this, new PlayerJoin());
+        registerEvents(this, new PlayerLeave());
+
+        Bukkit.getServer().getLogger().severe(ChatColor.RED + "Test");
+
+    }
+
+    public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {
+        for (Listener listener : listeners) {
+            Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
+        }
     }
 
 
