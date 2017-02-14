@@ -19,6 +19,8 @@ commands:
     description: Heal a player.
   feed:
     description: Feed a player.
+  helpop:
+    description: Send a message to a host.
 
 permissions:
   uhc.start:
@@ -36,3 +38,6 @@ permissions:
   uhc.feed:
     description: Feed a player.
     deafault: op
+  uhc.helpop:
+    description: See helpop messages.
+    default: op

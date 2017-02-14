@@ -71,6 +71,7 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("clear").setExecutor(new Clear());
         getCommand("heal").setExecutor(new Heal());
         getCommand("feed").setExecutor(new Feed());
+        getCommand("helpop").setExecutor(new HelpOp());
 
         //REGISTER LISTENERS
 
