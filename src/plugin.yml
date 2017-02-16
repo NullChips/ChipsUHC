@@ -23,6 +23,14 @@ commands:
     description: Send a message to a host.
   giveall:
     description: Give all players an item.
+  health:
+    description: Get a player's health.
+  muteall:
+    description: Mute all players.
+  mute:
+    description: Mute a player.
+  unmute:
+    description: Unmute a player.
 
 permissions:
   uhc.start:
@@ -45,4 +53,13 @@ permissions:
     default: op
   uhc.giveall:
     description: Give all players an item.
+    default: op
+  uhc.mute:
+    description: Mute players.
+    default: op
+  uhc.bypassmute:
+    description: Bypass a mute.
+    default: op
+  uhc.bypassglobalmute:
+    description: Bypass the global mute.
     default: op

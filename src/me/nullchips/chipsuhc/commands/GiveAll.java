@@ -1,7 +1,6 @@
 package me.nullchips.chipsuhc.commands;
 
 import me.nullchips.chipsuhc.utils.ChatUtils;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -57,7 +56,7 @@ public class GiveAll implements CommandExecutor {
 
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 player.getInventory().addItem(is);
-                player.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);  
+                player.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
                 cu.message(player, ChatColor.GOLD + p.getName() + ChatColor.WHITE + " has given all players: " + ChatColor.GREEN + cu.convertItemName(m) + ChatColor.WHITE + ".");
             }
 

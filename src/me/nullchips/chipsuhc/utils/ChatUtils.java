@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 /**
  * Created by Tommy on 13/02/2017.
  */
@@ -17,7 +19,10 @@ public class ChatUtils {
     private SettingsManager sm = SettingsManager.getInstance();
 
     private String prefix;
+
     private String consoleMessage = ChatColor.RED + "The console cannot perform this command.";
+    private boolean muteAll = false;
+    private ArrayList<String> mutedPlayers = new ArrayList<String>();
 
     public static ChatUtils getInstance() {
         if(instance == null) {
@@ -106,6 +111,34 @@ public class ChatUtils {
         } else {
             return s.substring(0, i);
         }
+    }
+
+    public void setMuteAll(boolean muteAll) {
+        this.muteAll = muteAll;
+    }
+
+    public boolean isMuteAll() {
+        return muteAll;
+    }
+
+    public ArrayList<String> getMutedPlayers() {
+        return mutedPlayers;
+    }
+
+    public void addMutedPlayer(Player p) {
+        if(!(mutedPlayers.contains(p.getUniqueId().toString()))) {
+            mutedPlayers.add(p.getUniqueId().toString());
+        }
+    }
+
+    public void removeMutedPlayer(Player p) {
+        if(mutedPlayers.contains(p.getUniqueId().toString())) {
+            mutedPlayers.remove(p.getUniqueId().toString());
+        }
+    }
+
+    public boolean isMuted(Player p) {
+        return mutedPlayers.contains(p.getUniqueId().toString());
     }
 
 }

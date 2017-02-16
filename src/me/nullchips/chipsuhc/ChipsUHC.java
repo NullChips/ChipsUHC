@@ -1,6 +1,7 @@
 package me.nullchips.chipsuhc;
 
 import me.nullchips.chipsuhc.commands.*;
+import me.nullchips.chipsuhc.listeners.PlayerChat;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
 import me.nullchips.chipsuhc.listeners.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
@@ -73,12 +74,17 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("feed").setExecutor(new Feed());
         getCommand("helpop").setExecutor(new HelpOp());
         getCommand("giveall").setExecutor(new GiveAll());
+        getCommand("health").setExecutor(new Health());
+        getCommand("muteall").setExecutor(new MuteAll());
+        getCommand("mute").setExecutor(new Mute());
+        getCommand("unmute").setExecutor(new Unmute());
 
         //REGISTER LISTENERS
 
         registerEvents(this, new PlayerRegainHealth());
         registerEvents(this, new PlayerJoin());
         registerEvents(this, new PlayerLeave());
+        registerEvents(this, new PlayerChat());
 
         Bukkit.getServer().getLogger().severe(ChatColor.RED + "Test");
 
