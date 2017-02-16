@@ -21,6 +21,8 @@ commands:
     description: Feed a player.
   helpop:
     description: Send a message to a host.
+  giveall:
+    description: Give all players an item.
 
 permissions:
   uhc.start:
@@ -40,4 +42,7 @@ permissions:
     deafault: op
   uhc.helpop:
     description: See helpop messages.
+    default: op
+  uhc.giveall:
+    description: Give all players an item.
     default: op

@@ -1,7 +1,9 @@
 package me.nullchips.chipsuhc.utils;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
@@ -54,4 +56,56 @@ public class ChatUtils {
     public void setConsoleMessage(String consoleMessage) {
         this.consoleMessage = consoleMessage;
     }
+
+    public boolean isInteger(String s) {
+        try
+        {
+            Integer.parseInt(s);
+            return true;
+        }
+        catch (NumberFormatException ex)
+        {
+            return false;
+        }
+    }
+
+    public String convertItemName(Material m) {
+
+        String itemName = m.toString();
+
+        String[] parts = itemName.split("_");
+
+        String finalName = "";
+
+        for (String s : parts) {
+            finalName = (finalName + s + " ");
+        }
+
+        finalName = WordUtils.capitalizeFully(finalName);
+
+        finalName = this.trimEndOfString(finalName);
+
+        return finalName;
+
+    }
+
+    public String trimEndOfString(String s)
+    {
+        if ( s == null || s.length() == 0 ) {
+            return s;
+        }
+
+        int i = s.length();
+
+        while ( i > 0 &&  Character.isWhitespace(s.charAt(i - 1)) ) {
+            i--;
+        }
+
+        if ( i == s.length() ) {
+            return s;
+        } else {
+            return s.substring(0, i);
+        }
+    }
+
 }
