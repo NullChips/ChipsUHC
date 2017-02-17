@@ -1,6 +1,7 @@
 package me.nullchips.chipsuhc.game;
 
 import me.nullchips.chipsuhc.ChipsUHC;
+import me.nullchips.chipsuhc.events.CountdownStartEvent;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +28,8 @@ public class GameCore {
     ChatUtils cu = ChatUtils.getInstance();
 
     //MAIN STARTING METHOD. WILL CONTAIN ALL AUTOMATIC PROCESSES.
-    public void startUHC(Player commandSender) {
+    public void startUHC(Player p) {
+        Bukkit.getServer().getPluginManager().callEvent(new CountdownStartEvent(p));
         ChipsUHC.setStartTimerRunning(true);
     }
 
