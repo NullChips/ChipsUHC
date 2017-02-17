@@ -8,6 +8,8 @@ commands:
     description: A test command for testing stuff init.
   start:
     description: Starts the UHC game.
+  cancel:
+    description: Cancel the start command. This prevents the start command from being inputted twice.
   gmc:
     description: Change gamemode to creative.
   gms:

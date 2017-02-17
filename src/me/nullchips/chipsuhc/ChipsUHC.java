@@ -1,12 +1,14 @@
 package me.nullchips.chipsuhc;
 
 import me.nullchips.chipsuhc.commands.*;
+import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.listeners.PlayerChat;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
 import me.nullchips.chipsuhc.listeners.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
 import me.nullchips.chipsuhc.utils.SettingsManager;
 import me.nullchips.chipsuhc.utils.TeamUtils;
+import me.nullchips.chipsuhc.utils.StartTimeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -21,18 +23,26 @@ import java.util.ArrayList;
 public class ChipsUHC extends JavaPlugin {
 
     private static Plugin instance;
-    private static int ticks;
+    private static int seconds;
+    private static boolean startTimerRunning;
+    private static boolean gameTimerRunning;
 
     private TeamUtils tu;
     private SettingsManager settingsManager;
+    private GameCore gc;
+    private StartTimeManager tm;
 
     @Override
     public void onEnable() {
         instance = this;
-        ticks = 0;
+        seconds = 0;
+        startTimerRunning = false;
+        gameTimerRunning = false;
 
         tu = TeamUtils.getInstance();
         settingsManager = SettingsManager.getInstance();
+        gc = GameCore.getInstance();
+        tm = StartTimeManager.getInstance();
 
         settingsManager.setup(this);
 
@@ -67,6 +77,7 @@ public class ChipsUHC extends JavaPlugin {
 
         getCommand("test").setExecutor(new Test());
         getCommand("start").setExecutor(new Start());
+        getCommand("cancel").setExecutor(new Cancel());
         getCommand("gmc").setExecutor(new GMC());
         getCommand("gms").setExecutor(new GMS());
         getCommand("clear").setExecutor(new Clear());
@@ -88,6 +99,8 @@ public class ChipsUHC extends JavaPlugin {
 
         Bukkit.getServer().getLogger().severe(ChatColor.RED + "Test");
 
+        Bukkit.getServer().getScheduler().runTaskTimer(this, tm, 20L, 20L);
+
     }
 
     public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {
@@ -106,4 +119,28 @@ public class ChipsUHC extends JavaPlugin {
         return instance;
     }
 
+
+    public static int getSeconds() {
+        return seconds;
+    }
+
+    public static void setSeconds(int seconds) {
+        ChipsUHC.seconds = seconds;
+    }
+
+    public static boolean isStartTimerRunning() {
+        return startTimerRunning;
+    }
+
+    public static void setStartTimerRunning(boolean startTimerRunning) {
+        ChipsUHC.startTimerRunning = startTimerRunning;
+    }
+
+    public static boolean isGameTimerRunning() {
+        return gameTimerRunning;
+    }
+
+    public static void setGameTimerRunning(boolean gameTimerRunning) {
+        ChipsUHC.gameTimerRunning = gameTimerRunning;
+    }
 }

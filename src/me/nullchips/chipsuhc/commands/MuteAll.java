@@ -37,6 +37,7 @@ public class MuteAll implements CommandExecutor {
                 cu.setMuteAll(false);
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     cu.message(player, ChatColor.AQUA + "" + ChatColor.BOLD + "Global mute is now disabled!");
+                    player.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
                 }
                 return true;
             }
