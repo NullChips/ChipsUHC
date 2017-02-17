@@ -35,7 +35,7 @@ public class Start implements CommandExecutor {
             return false;
         }
 
-        if(!(ChipsUHC.isStartTimerRunning()) || !(ChipsUHC.isGameTimerRunning())) {
+        if(!(ChipsUHC.isStartTimerRunning()) && !(ChipsUHC.isGameTimerRunning())) {
 
             if (this.startCommand == false) {
                 cu.message(p, ChatColor.RED + "" + ChatColor.BOLD + "Are you sure you want to start the UHC? Type /start again to start, or type /cancel to cancel.");

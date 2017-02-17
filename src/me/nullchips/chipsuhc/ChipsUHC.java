@@ -1,6 +1,7 @@
 package me.nullchips.chipsuhc;
 
 import me.nullchips.chipsuhc.commands.*;
+import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.listeners.PlayerChat;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
@@ -31,6 +32,7 @@ public class ChipsUHC extends JavaPlugin {
     private SettingsManager settingsManager;
     private GameCore gc;
     private StartTimeManager tm;
+    private FeatureManager fm;
 
     @Override
     public void onEnable() {
@@ -43,10 +45,13 @@ public class ChipsUHC extends JavaPlugin {
         settingsManager = SettingsManager.getInstance();
         gc = GameCore.getInstance();
         tm = StartTimeManager.getInstance();
+        fm = FeatureManager.getInstance();
 
         settingsManager.setup(this);
 
         settingsManager.loadConfigSettings();
+
+        fm.registerFeatures();
 
         //ADD ALL POSSIBLE TEAM COLOURS
 
@@ -96,8 +101,6 @@ public class ChipsUHC extends JavaPlugin {
         registerEvents(this, new PlayerJoin());
         registerEvents(this, new PlayerLeave());
         registerEvents(this, new PlayerChat());
-
-        Bukkit.getServer().getLogger().severe(ChatColor.RED + "Test");
 
         Bukkit.getServer().getScheduler().runTaskTimer(this, tm, 20L, 20L);
 

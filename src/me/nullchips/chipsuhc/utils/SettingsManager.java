@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc.utils;
 
+import me.nullchips.chipsuhc.features.FeatureManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,6 +24,7 @@ public class SettingsManager {
     }
 
     private ChatUtils cu = ChatUtils.getInstance();
+    private FeatureManager fm = FeatureManager.getInstance();
 
     Plugin p;
     FileConfiguration config;

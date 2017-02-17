@@ -1,2 +1,4 @@
 settings:
   message-prefix: '&c[&6Chips&f&lUHC&c]'
+features:
+  tab-list-health: 'true'
