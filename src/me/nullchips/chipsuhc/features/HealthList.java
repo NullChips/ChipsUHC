@@ -46,14 +46,12 @@ public class HealthList extends Feature implements Runnable {
     }
 
     private void initializeScoreboard() {
-
         try {
             board.registerNewObjective("UHCHealth", "dummy");
         } catch (IllegalArgumentException localIllegalArgumentException1) { }
 
         objPlayerList = board.getObjective("UHCHealth");
         objPlayerList.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-
     }
 
     public void updatePlayers() {
@@ -62,6 +60,7 @@ public class HealthList extends Feature implements Runnable {
             Score score = objPlayerList.getScore(p);
             double d = p.getHealth() * 5;
             score.setScore((int) d);
+
         }
     }
 }

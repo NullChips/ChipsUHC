@@ -17,8 +17,6 @@ public abstract class Feature {
     public Feature(String displayName, String configId, boolean enabled) {
         this.displayName = displayName;
         this.configId = configId;
-        //this.enabled = fm.getStateFromConfig(configId);
-        this.enabled = true;
     }
 
     public abstract void onEnable();
@@ -30,8 +28,10 @@ public abstract class Feature {
     }
 
     public void setEnabled(boolean enabled) {
-        enabled = enabled;
-        if(enabled) { onEnable(); } else { onDisable(); }
+        this.enabled = enabled;
+        if(enabled) { onEnable(); } else {
+            onDisable();
+        }
     }
 
     public String getDisplayName() {

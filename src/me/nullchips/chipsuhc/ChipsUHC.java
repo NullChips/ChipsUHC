@@ -51,7 +51,6 @@ public class ChipsUHC extends JavaPlugin {
 
         settingsManager.loadConfigSettings();
 
-        fm.registerFeatures();
 
         //ADD ALL POSSIBLE TEAM COLOURS
 
@@ -94,6 +93,7 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("muteall").setExecutor(new MuteAll());
         getCommand("mute").setExecutor(new Mute());
         getCommand("unmute").setExecutor(new Unmute());
+        getCommand("features").setExecutor(new FeatureCommand());
 
         //REGISTER LISTENERS
 

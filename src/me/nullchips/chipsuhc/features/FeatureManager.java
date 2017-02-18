@@ -9,12 +9,13 @@ import java.util.ArrayList;
  */
 public class FeatureManager {
 
-    private FeatureManager() { }
+    private FeatureManager() {
+    }
 
     private static FeatureManager instance;
 
     public static FeatureManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new FeatureManager();
         }
         return instance;
@@ -24,33 +25,14 @@ public class FeatureManager {
 
     private ArrayList<Feature> allFeatures = new ArrayList<Feature>();
 
+    public static boolean testBoolean;
+
     public void addFeature(Feature f) {
         allFeatures.add(f);
     }
 
-    public void registerFeatures() {
-        allFeatures.add(new HealthList());
-
-        for(Feature f : this.allFeatures) {
-            f.onEnable();
-        }
-
-    }
-
-    public boolean getStateFromConfig(String configId) {
-
-        if(!(sm.getConfig().contains("features." + configId))) {
-            return false;
-        }
-
-        String s = sm.getConfig().getString("features." + configId);
-
-        if(s.equalsIgnoreCase("true")) {
-            return true;
-        } else {
-            return false;
-        }
-
+    public ArrayList<Feature> getAllFeatures() {
+        return allFeatures;
     }
 
 }

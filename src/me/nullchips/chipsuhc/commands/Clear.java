@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc.commands;
 
+import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import me.nullchips.chipsuhc.utils.PlayerUtils;
 import org.bukkit.Bukkit;

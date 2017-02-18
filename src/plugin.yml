@@ -33,6 +33,8 @@ commands:
     description: Mute a player.
   unmute:
     description: Unmute a player.
+  features:
+    description: Get the state of features.
 
 permissions:
   uhc.start:
@@ -65,3 +67,6 @@ permissions:
   uhc.bypassglobalmute:
     description: Bypass the global mute.
     default: op
+  uhc.getfeatures:
+    description: Get the state of the features.
+    default: true

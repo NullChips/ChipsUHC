@@ -1,6 +1,8 @@
 package me.nullchips.chipsuhc.utils;
 
+import me.nullchips.chipsuhc.features.Feature;
 import me.nullchips.chipsuhc.features.FeatureManager;
+import me.nullchips.chipsuhc.features.HealthList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -62,6 +64,18 @@ public class SettingsManager {
             Bukkit.getServer().getLogger().severe(ChatColor.RED + "Message prefix cannot be found in config.yml!");
         }
 
+        registerFeatures();
+
+        for(Feature feature : fm.getAllFeatures()) {
+            String s = this.getConfig().getString("features." + feature.getConfigId());
+            if(s.equalsIgnoreCase("true")) feature.setEnabled(true);
+            else feature.setEnabled(false);
+        }
+
+    }
+
+    private void registerFeatures() {
+        fm.addFeature(new HealthList());
     }
 
 }
