@@ -35,6 +35,8 @@ commands:
     description: Unmute a player.
   features:
     description: Get the state of features.
+  createteam:
+    description: Create a team.
 
 permissions:
   uhc.start:
@@ -70,3 +72,6 @@ permissions:
   uhc.getfeatures:
     description: Get the state of the features.
     default: true
+  uhc.modifyteams:
+    description: Modify the contents of teams.
+    default: op

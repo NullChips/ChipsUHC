@@ -94,6 +94,7 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("mute").setExecutor(new Mute());
         getCommand("unmute").setExecutor(new Unmute());
         getCommand("features").setExecutor(new FeatureCommand());
+        getCommand("createteam").setExecutor(new CreateTeam());
 
         //REGISTER LISTENERS
 

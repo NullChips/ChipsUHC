@@ -4,6 +4,13 @@ package me.nullchips.chipsuhc.utils;
  * Created by Tommy on 15/02/2017.
  */
 
-public class SpreadPlayers {
+public class SpreadPlayers implements Runnable {
+
+    @Override
+    public void run() {
+
+    }
+
+
 
 }

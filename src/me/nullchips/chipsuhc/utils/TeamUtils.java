@@ -1,8 +1,11 @@
 package me.nullchips.chipsuhc.utils;
 
 import me.nullchips.chipsuhc.teams.Team;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,10 @@ public class TeamUtils {
     private ArrayList<ChatColor> possibleTeamColours;
     private ArrayList<ChatColor> usedTeamColours;
 
-    private List<String> inTeam = new ArrayList<String>();
     private List<Team> allTeams = new ArrayList<Team>();
+
+    private ScoreboardManager scoreboardManager = Bukkit.getServer().getScoreboardManager();
+    private Scoreboard board = scoreboardManager.getNewScoreboard();
 
     private TeamUtils() { }
 
@@ -29,21 +34,9 @@ public class TeamUtils {
         return instance;
     }
 
-    public List<String> getInTeam() {
-        return inTeam;
-    }
-
-    public void addIntoTeamArray(String playerName) {
-        this.inTeam.add(playerName);
-    }
-
-    public void removeFromTeamArray(String playerName) {
-        this.inTeam.remove(playerName);
-    }
-
     public boolean hasTeam(Player p) {
         for(Team t : this.getAllTeams()) {
-            if (t.getMembers().contains(p.getName())) {
+            if (t.getMembers().contains(p.getUniqueId().toString())) {
                 return true;
             }
         }
@@ -63,7 +56,6 @@ public class TeamUtils {
     }
 
     public void clearTeams() {
-        this.inTeam.clear();
         this.allTeams.clear();
     }
 
@@ -115,4 +107,7 @@ public class TeamUtils {
         return cc;
     }
 
+    public Scoreboard getBoard() {
+        return board;
+    }
 }
