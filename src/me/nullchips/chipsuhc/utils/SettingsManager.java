@@ -3,6 +3,7 @@ package me.nullchips.chipsuhc.utils;
 import me.nullchips.chipsuhc.features.Feature;
 import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.features.HealthList;
+import me.nullchips.chipsuhc.game.GameCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -27,6 +28,8 @@ public class SettingsManager {
 
     private ChatUtils cu = ChatUtils.getInstance();
     private FeatureManager fm = FeatureManager.getInstance();
+    private GameCore gc = GameCore.getInstance();
+    private SpreadPlayers sp = SpreadPlayers.getInstace();
 
     Plugin p;
     FileConfiguration config;
@@ -61,7 +64,30 @@ public class SettingsManager {
             String prefix = this.getConfig().getString("settings.message-prefix");
             cu.setPrefix(ChatColor.translateAlternateColorCodes('&', prefix));
         } else {
-            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Message prefix cannot be found in config.yml!");
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.message-prefix in config.yml. Shutting down server...");
+            Bukkit.shutdown();
+        }
+
+        if(this.getConfig().contains("settings.uhc-world-name") && this.getConfig().get("settings.uhc-world-name") instanceof String) {
+            String worldName = this.getConfig().getString("settings.message-prefix");
+            gc.setGameWorldName(worldName);
+        } else {
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.uhc-world-name in config.yml. Match will be unable to be started.");
+            gc.setGameWorldName(null);
+        }
+
+        if(this.getConfig().contains("settings.spread-chunk-delay") && this.getConfig().get("settings.spread-chunk-delay") instanceof Integer) {
+            sp.setChunkLoadDelay(this.getConfig().getInt("settings.spread-chunk-delay"));
+        } else {
+            sp.setChunkLoadDelay(750);
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.spread-chunk-delay in config.yml. Using default value of 30.");
+        }
+
+        if(this.getConfig().contains("settings.spread-max-tries") && this.getConfig().get("settings.spread-max-tries") instanceof Integer) {
+            sp.setMaxTires(this.getConfig().getInt("settings.spread-max-tries"));
+        } else {
+            sp.setMaxTires(750);
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.spread-max-tries in config.yml. Using default value of 750.");
         }
 
         registerFeatures();

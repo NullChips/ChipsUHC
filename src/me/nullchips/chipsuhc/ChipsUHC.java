@@ -7,6 +7,7 @@ import me.nullchips.chipsuhc.listeners.PlayerChat;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
 import me.nullchips.chipsuhc.listeners.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
+import me.nullchips.chipsuhc.utils.GameState;
 import me.nullchips.chipsuhc.utils.SettingsManager;
 import me.nullchips.chipsuhc.utils.TeamUtils;
 import me.nullchips.chipsuhc.utils.StartTimeManager;
@@ -31,7 +32,7 @@ public class ChipsUHC extends JavaPlugin {
     private TeamUtils tu;
     private SettingsManager settingsManager;
     private GameCore gc;
-    private StartTimeManager tm;
+    private StartTimeManager stm;
     private FeatureManager fm;
 
     @Override
@@ -41,10 +42,12 @@ public class ChipsUHC extends JavaPlugin {
         startTimerRunning = false;
         gameTimerRunning = false;
 
+        GameState.setGameState(GameState.LOBBY);
+
         tu = TeamUtils.getInstance();
         settingsManager = SettingsManager.getInstance();
         gc = GameCore.getInstance();
-        tm = StartTimeManager.getInstance();
+        stm = StartTimeManager.getInstance();
         fm = FeatureManager.getInstance();
 
         settingsManager.setup(this);
@@ -105,7 +108,7 @@ public class ChipsUHC extends JavaPlugin {
         registerEvents(this, new PlayerLeave());
         registerEvents(this, new PlayerChat());
 
-        Bukkit.getServer().getScheduler().runTaskTimer(this, tm, 20L, 20L);
+        Bukkit.getServer().getScheduler().runTaskTimer(this, stm, 20L, 20L);
 
     }
 

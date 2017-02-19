@@ -2,6 +2,7 @@ package me.nullchips.chipsuhc.commands;
 
 import me.nullchips.chipsuhc.teams.Team;
 import me.nullchips.chipsuhc.utils.ChatUtils;
+import me.nullchips.chipsuhc.utils.GameState;
 import me.nullchips.chipsuhc.utils.TeamUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +31,11 @@ public class AddToTeam implements CommandExecutor {
 
             if (!(p.hasPermission("uhc.modifyteams"))) {
                 cu.noPermission(p);
+                return true;
+            }
+
+            if(!GameState.isGameState(GameState.LOBBY)) {
+                cu.message(p, ChatColor.RED + "You cannot alter teams when the game is in progress.");
                 return true;
             }
 

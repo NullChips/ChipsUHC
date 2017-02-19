@@ -43,6 +43,7 @@ public class StartTimeManager implements Runnable {
             }
 
             if(ChipsUHC.getSeconds() == 11) {
+                GameState.setGameState(GameState.SPREAD);
                 GameCore.getInstance().prepareSpread();
             }
 

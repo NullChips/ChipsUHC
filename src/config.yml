@@ -1,4 +1,7 @@
 settings:
-  message-prefix: '&c[&6Chips&f&lUHC&c]'
+  message-prefix: '&c[&6Chips&f&lUHC&c]' #Prefix shown before each message.
+  uhc-world-name: 'uhc' #Name of world in which players are spread to.
+  spread-chunk-delay: 30 #The delay in ticks between the loading of chunks at each location. Set this number higher if you experince lagging or crashes when spreading players.
+  spread-max-tries: 750 #The maximum amount of attempts to find spread locations before the spread is cancelled.
 features:
   tab-list-health: 'true'
