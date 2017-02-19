@@ -42,6 +42,10 @@ public class CreateTeam implements CommandExecutor {
                 return true;
             }
 
+            if(tu.getUsedTeamColours().size() == tu.getPossibleTeamColours().size()) {
+                cu.message(p, ChatColor.RED + "No more teams can be created!");
+            }
+
             ArrayList<String> playersToAdd= new ArrayList<String>();
 
             for(String s : args) {
@@ -79,7 +83,7 @@ public class CreateTeam implements CommandExecutor {
 
             }
 
-            int teamId = tu.getAllTeams().size() - 1;
+            int teamId = tu.getAllTeams().size() + 1;
             String teamIdString = Integer.toString(teamId);
 
             Team team = new Team(teamIdString, playersToAddUUID);
