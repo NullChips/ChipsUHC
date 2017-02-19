@@ -74,7 +74,6 @@ public class ChipsUHC extends JavaPlugin {
         tu.addPossibleTeamColour(ChatColor.RED);
         tu.addPossibleTeamColour(ChatColor.STRIKETHROUGH);
         tu.addPossibleTeamColour(ChatColor.UNDERLINE);
-        tu.addPossibleTeamColour(ChatColor.WHITE);
         tu.addPossibleTeamColour(ChatColor.YELLOW);
 
         //REGISTER COMMANDS
