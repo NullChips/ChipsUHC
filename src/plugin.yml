@@ -37,6 +37,12 @@ commands:
     description: Get the state of features.
   createteam:
     description: Create a team.
+  removeteam:
+    description: Remove a team.
+  removefromteam:
+    description: Remove a player from a team.
+  addtoteam:
+    description: Add a player to a team.
 
 permissions:
   uhc.start:

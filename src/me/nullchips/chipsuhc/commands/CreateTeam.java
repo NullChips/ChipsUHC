@@ -1,6 +1,5 @@
 package me.nullchips.chipsuhc.commands;
 
-import com.sun.org.apache.regexp.internal.RE;
 import me.nullchips.chipsuhc.teams.Team;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import me.nullchips.chipsuhc.utils.TeamUtils;
@@ -44,6 +43,7 @@ public class CreateTeam implements CommandExecutor {
 
             if(tu.getUsedTeamColours().size() == tu.getPossibleTeamColours().size()) {
                 cu.message(p, ChatColor.RED + "No more teams can be created!");
+                return true;
             }
 
             ArrayList<String> playersToAdd= new ArrayList<String>();
@@ -71,7 +71,7 @@ public class CreateTeam implements CommandExecutor {
 
             }
 
-            ArrayList<String> playersToAddUUID= new ArrayList<String>();
+            ArrayList<String> playersToAddUUID= new ArrayList<>();
 
             for(String s : playersToAdd) {
 
@@ -83,7 +83,8 @@ public class CreateTeam implements CommandExecutor {
 
             }
 
-            int teamId = tu.getAllTeams().size() + 1;
+            int teamId = tu.getTeamId();
+            tu.setTeamId(teamId + 1);
             String teamIdString = Integer.toString(teamId);
 
             Team team = new Team(teamIdString, playersToAddUUID);
@@ -91,7 +92,7 @@ public class CreateTeam implements CommandExecutor {
 
             tu.addTeam(team);
 
-            cu.message(p, ChatColor.GREEN + "Team " + ChatColor.AQUA + team.getName() + ChatColor.GREEN + " has been created successfully.");
+            cu.message(p, ChatColor.GREEN + "Team " + ChatColor.AQUA + team.getTeamId() + ChatColor.GREEN + " has been created successfully.");
 
         }
         return true;

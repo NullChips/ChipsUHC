@@ -17,6 +17,8 @@ public class TeamUtils {
 
     private static TeamUtils instance;
 
+    private int teamId = 1;
+
     private ArrayList<ChatColor> possibleTeamColours;
     private ArrayList<ChatColor> usedTeamColours;
 
@@ -71,10 +73,6 @@ public class TeamUtils {
         this.possibleTeamColours.add(c);
     }
 
-    public void removePossibleTeamColour(ChatColor c) {
-        this.possibleTeamColours.remove(c);
-    }
-
     public ArrayList<ChatColor> getUsedTeamColours() {
         return usedTeamColours;
     }
@@ -83,31 +81,51 @@ public class TeamUtils {
         this.usedTeamColours = usedTeamColours;
     }
 
-    public void addUsedTeamColour(ChatColor c) {
-        this.usedTeamColours.add(c);
-    }
-
-    public void removeUsedTeamColour(ChatColor c) {
-        this.usedTeamColours.remove(c);
-    }
-
-    public void clearUsedTeamColours() {
-        this.usedTeamColours.clear();
-    }
-
     public ChatColor getNewTeamColour() {
         ChatColor cc = null;
         for(ChatColor co : this.getPossibleTeamColours()) {
             if (!this.getUsedTeamColours().contains(co)) {
                 cc = co;
-                this.addUsedTeamColour(co);
                 break;
             }
         }
+
+        reloadUsedChatColours();
         return cc;
     }
 
     public Scoreboard getBoard() {
         return board;
     }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public Team getTeam(Player p) {
+        String uuid = p.getUniqueId().toString();
+
+        for(Team team : this.allTeams) {
+            if (team.getMembers().contains(uuid)) {
+                return team;
+            }
+        }
+
+        return null;
+
+    }
+
+    public void reloadUsedChatColours() {
+
+        this.usedTeamColours.clear();
+
+        for(Team t : this.allTeams) {
+            this.usedTeamColours.add(t.getColor());
+        }
+    }
+
 }

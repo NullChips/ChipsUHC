@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -16,15 +15,14 @@ public class Team {
     private TeamUtils tu = TeamUtils.getInstance();
 
     private ChatColor color;
-    private String name;
+    private String teamId;
     private ArrayList<String> members;
 
     public Team(String id, ArrayList<String> members) {
-        this.name = "UHC" + id;
+        this.teamId = "UHC" + id;
         this.members = members;
         this.color = tu.getNewTeamColour();
 
-        tu.addUsedTeamColour(this.color);
     }
 
     public ChatColor getColor() {
@@ -35,12 +33,12 @@ public class Team {
         this.color = color;
     }
 
-    public String getName() {
-        return name;
+    public String getTeamId() {
+        return teamId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public ArrayList<String> getMembers() {
@@ -59,9 +57,16 @@ public class Team {
             if(target != null) {
                 target.setDisplayName(this.color + target.getName() + ChatColor.WHITE);
                 target.setPlayerListName(this.color + target.getName() + ChatColor.WHITE);
-                //TODO Ensure that there are colours left before creating a team!
             }
 
         }
+    }
+
+    public void addMember(Player target) {
+
+        String s = target.getUniqueId().toString();
+
+        this.getMembers().add(s);
+
     }
 }
