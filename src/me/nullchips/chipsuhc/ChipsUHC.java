@@ -7,17 +7,17 @@ import me.nullchips.chipsuhc.listeners.PlayerChat;
 import me.nullchips.chipsuhc.listeners.PlayerJoin;
 import me.nullchips.chipsuhc.listeners.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
-import me.nullchips.chipsuhc.utils.GameState;
-import me.nullchips.chipsuhc.utils.SettingsManager;
-import me.nullchips.chipsuhc.utils.TeamUtils;
-import me.nullchips.chipsuhc.utils.StartTimeManager;
+import me.nullchips.chipsuhc.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Tommy on 13/02/2017.
@@ -35,6 +35,8 @@ public class ChipsUHC extends JavaPlugin {
     private StartTimeManager stm;
     private FeatureManager fm;
 
+    public static SpreadPlayers sp;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -49,6 +51,7 @@ public class ChipsUHC extends JavaPlugin {
         gc = GameCore.getInstance();
         stm = StartTimeManager.getInstance();
         fm = FeatureManager.getInstance();
+        sp = SpreadPlayers.getInstance();
 
         settingsManager.setup(this);
 
@@ -100,6 +103,7 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("removeteam").setExecutor(new RemoveTeam());
         getCommand("removefromteam").setExecutor(new RemoveFromTeam());
         getCommand("addtoteam").setExecutor(new AddToTeam());
+        getCommand("createuhcworld").setExecutor(new CreateUHCWorld());
 
         //REGISTER LISTENERS
 
@@ -152,4 +156,35 @@ public class ChipsUHC extends JavaPlugin {
     public static void setGameTimerRunning(boolean gameTimerRunning) {
         ChipsUHC.gameTimerRunning = gameTimerRunning;
     }
+
+
+    public static Player getPlayerFromUUID(String s) {
+
+        Player foundPlayer = null;
+
+        for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if(p.getUniqueId().toString().equals(s)) {
+                foundPlayer = p;
+                break;
+            }
+        }
+
+        return foundPlayer;
+    }
+
+    public static Player getPlayerFromUUID(UUID u) {
+
+        Player foundPlayer = null;
+
+        for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if(p.getUniqueId().equals(u)) {
+                foundPlayer = p;
+                break;
+            }
+        }
+
+        return foundPlayer;
+
+    }
+
 }

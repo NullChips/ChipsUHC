@@ -37,7 +37,7 @@ public class Health implements CommandExecutor {
                 return true;
             }
 
-            cu.message(p, ChatColor.GREEN + target.getName() + ChatColor.WHITE + " is on " + ChatColor.DARK_RED + p.getHealth() + ChatColor.WHITE + " health.");
+            cu.message(p, ChatColor.GREEN + target.getName() + ChatColor.WHITE + " is on " + ChatColor.RED + p.getHealth() / 2 + ChatColor.WHITE + " hearts.");
 
         }
 

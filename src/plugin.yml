@@ -27,6 +27,7 @@ commands:
     description: Give all players an item.
   health:
     description: Get a player's health.
+    aliases: [h]
   muteall:
     description: Mute all players.
   mute:
@@ -43,6 +44,8 @@ commands:
     description: Remove a player from a team.
   addtoteam:
     description: Add a player to a team.
+  createuhcworld:
+    description: Create the world for the match.
 
 permissions:
   uhc.start:
@@ -81,3 +84,6 @@ permissions:
   uhc.modifyteams:
     description: Modify the contents of teams.
     default: op
+  uhc.createworld:
+    description: Create the world for the match.
+    deafult: op

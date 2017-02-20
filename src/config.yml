@@ -3,5 +3,9 @@ settings:
   uhc-world-name: 'uhc' #Name of world in which players are spread to.
   spread-chunk-delay: 30 #The delay in ticks between the loading of chunks at each location. Set this number higher if you experince lagging or crashes when spreading players.
   spread-max-tries: 750 #The maximum amount of attempts to find spread locations before the spread is cancelled.
+  spread-min-distance: 100 #The minimum amount of distance between players when they have been spread.
+
+  borders:
+    start-radius: 1000
 features:
   tab-list-health: 'true'
