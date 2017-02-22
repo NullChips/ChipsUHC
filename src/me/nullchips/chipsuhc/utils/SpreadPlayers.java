@@ -39,103 +39,116 @@ public class SpreadPlayers implements Runnable {
     private ArrayList<String> soloPlayersToSpread = new ArrayList<>();
     private ArrayList<Location> locationsToSpreadTo = new ArrayList<>();
 
-    private Location lastLocation;
-    private Team lastTeam;
-    private Player lastPlayer;
-    private int spreadCount = 0;
-    private int locationCount;
-    private boolean teamsAreSpread;
+    //NEW SPREAD VARIABLES
+
+    private int teamsLeftToSpread;
+    private int playersLeftToSpread;
+    private int teamIndex;
+    private int locationIndex;
+    private int playerIndex;
+    private boolean messageDisplayed;
+
 
     @Override
     public void run() {
 
-        if(lastTeam != null) {
+        long l = (long) this.chunkLoadDelay;
+        l = l/3;
+        long chunkLoadDelayLong = l*2;
 
-            cu.broadcast(ChatColor.GREEN + "Spreading team " + ChatColor.AQUA + this.lastTeam.getTeamId());
-            for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-                p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
+        if(this.teamsLeftToSpread != 0) {
+
+            this.messageDisplayed = false;
+
+            Location tpLocation = this.locationsToSpreadTo.get(this.locationIndex);
+            Team t = this.teamsToSpread.get(this.teamIndex);
+
+            for(String s : t.getMembers()) {
+                Player p = ChipsUHC.getPlayerFromUUID(s);
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChipsUHC.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+                        if(p.isOnline() && p != null) {
+                            p.teleport(tpLocation);
+                            if (!messageDisplayed) {
+                                cu.broadcast(ChatColor.GREEN + "Scattered team " + ChatColor.AQUA + t.getTeamId() + ChatColor.GREEN + ".");
+                                messageDisplayed = true;
+                                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                    p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
+                                }
+                            }
+                        } else {
+                            cu.broadcast(ChatColor.RED + "Player not online in team " + t.getTeamId() + ".");
+                            //TODO Better system for handling offline players?
+                        }
+                    }
+                }, chunkLoadDelayLong);
             }
 
-            for(String s : lastTeam.getMembers()) {
-                Player player = ChipsUHC.getPlayerFromUUID(s);
-                if(player != null) {
-                    player.teleport(lastLocation);
-                }
-            }
+            this.locationIndex++;
+            this.teamIndex ++;
+            this.teamsLeftToSpread--;
 
-            lastTeam = null;
-            lastLocation = null;
-
-        } else if (lastPlayer != null) {
-
-            cu.broadcast(ChatColor.GREEN + "Spreading player " + ChatColor.AQUA + lastPlayer.getName());
-
-            for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-                p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
-            }
-
-            lastPlayer.teleport(lastLocation);
-            lastPlayer = null;
-            lastLocation = null;
-
-        }
-
-        if(teamsToSpread.size() != 0) {
-           this.lastTeam = this.teamsToSpread.get(0);
-           this.teamsToSpread.remove(0);
-        } else {
-            if(teamsAreSpread = false) {
-                cu.broadcast(ChatColor.BLUE + "Teams are fully spread, now spreading solo players.");
-            }
-            this.lastPlayer = ChipsUHC.getPlayerFromUUID(this.soloPlayersToSpread.get(0));
-            this.soloPlayersToSpread.remove(0);
-        }
-
-        this.lastLocation = this.locationsToSpreadTo.get(0);
-
-        spreadCount++;
-
-        if(spreadCount == locationCount) {
-            if(lastTeam != null) {
-                cu.broadcast(ChatColor.GREEN + "Spreading team " + ChatColor.AQUA + this.lastTeam.getTeamId());
-
-                for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if(this.teamsLeftToSpread == 0 && playersLeftToSpread == 0) {
+                cu.broadcast(ChatColor.GOLD + "" + ChatColor.BOLD + "Player spread finished.");
+                for(Player p: Bukkit.getServer().getOnlinePlayers()) {
                     p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
                 }
+                this.finishSpread();
+                this.soloPlayersToSpread.clear();
+                this.teamsToSpread.clear();
+            }
 
-                for(String s : lastTeam.getMembers()) {
-                    Player player = ChipsUHC.getPlayerFromUUID(s);
-                    if(player != null) {
-                        player.teleport(lastLocation);
+        } else if (this.playersLeftToSpread != 0) {
+            Location tpLocation = this.locationsToSpreadTo.get(this.locationIndex);
+            Player p = ChipsUHC.getPlayerFromUUID(this.soloPlayersToSpread.get(playerIndex));
+
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChipsUHC.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    if(p.isOnline() && p != null) {
+                        p.teleport(tpLocation);
+                        cu.broadcast(ChatColor.GREEN + "Scattered player " + ChatColor.AQUA + p.getName() + ChatColor.GREEN + ".");
+                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                            p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
+                        }
+                    } else {
+                        cu.broadcast(ChatColor.RED + "Player not online.");
+                        //TODO Better system for handling offline players?
                     }
                 }
+            }, chunkLoadDelayLong);
 
-                lastTeam = null;
-                lastLocation = null;
+            this.locationIndex++;
+            this.playerIndex++;
+            this.playersLeftToSpread--;
 
-            } else if (lastPlayer != null) {
+            long finalDelayLong = (long) this.chunkLoadDelay;
 
-                cu.broadcast(ChatColor.GREEN + "Spreading player " + ChatColor.AQUA + lastPlayer.getName());
+            if(this.teamsLeftToSpread == 0 && playersLeftToSpread == 0) {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChipsUHC.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
 
-                for(Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
-                }
+                        cu.broadcast(ChatColor.GOLD + "" + ChatColor.BOLD + "Player spread finished.");
+                        for(Player player: Bukkit.getServer().getOnlinePlayers()) {
+                            player.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
+                        }
+                        finishSpread();
+                        soloPlayersToSpread.clear();
+                        teamsToSpread.clear();
 
-                lastPlayer.teleport(lastLocation);
-                lastPlayer = null;
-                lastLocation = null;
+                    }
+                },finalDelayLong);
 
             }
 
-            finishSpread();
         }
     }
 
     private void finishSpread() {
 
         Bukkit.getServer().getScheduler().cancelTask(taskId);
-
-        cu.broadcast(ChatColor.GREEN + "" + ChatColor.BOLD + "Playerspread finished!");
 
         gc.startMatch();
 
@@ -159,15 +172,17 @@ public class SpreadPlayers implements Runnable {
 
                     World gameWorld = Bukkit.getServer().getWorld(worldName);
 
-                    int locationY = gameWorld.getHighestBlockYAt(locationX, locationZ);
+                    int locationY = gameWorld.getHighestBlockYAt(locationX, locationZ) - 1;
 
                     Location blockLocation = new Location(gameWorld, locationX, locationY, locationZ);
 
                     Block locationBlock = blockLocation.getBlock();
 
-                    if (locationBlock.getType() == Material.LAVA || locationBlock.getType() == Material.WATER || locationBlock.getType() == Material.CACTUS) {
+                    if (locationBlock.getType() == Material.LAVA || locationBlock.getType() == Material.WATER || locationBlock.getType() == Material.CACTUS || locationBlock.getType() == Material.STATIONARY_WATER || locationBlock.getType() == Material.STATIONARY_LAVA || locationBlock.getType() == Material.WATER_LILY) {
                         locationOkay = false;
                     }
+
+                    spreadSender.sendMessage(locationBlock.getType().name());
 
                     int teleportY = blockLocation.getBlockY() + 1;
 
@@ -201,10 +216,13 @@ public class SpreadPlayers implements Runnable {
 
     public void spreadPlayers(Player p) {
         final long chunkLoadDelayLong = (long) chunkLoadDelay;
-        this.locationCount = 0;
-        if(this.teamsToSpread.size() != 0) {
-            teamsAreSpread = false;
-        }
+
+        this.teamsLeftToSpread = this.teamsToSpread.size();
+        this.playersLeftToSpread = this.soloPlayersToSpread.size();
+        this.teamIndex = 0;
+        this.locationIndex = 0;
+        this.playerIndex = 0;
+
         taskId = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ChipsUHC.getInstance(), this, chunkLoadDelayLong, chunkLoadDelayLong);
     }
 

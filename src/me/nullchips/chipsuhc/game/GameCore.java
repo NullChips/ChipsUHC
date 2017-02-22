@@ -39,6 +39,13 @@ public class GameCore {
         ChipsUHC.setStartTimerRunning(true);
         GameState.setGameState(GameState.STARTING);
 
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChipsUHC.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                ChipsUHC.sp.spreadPlayers(p);
+            }
+        }, 250L);
+
     }
 
     public void prepareSpread() {
@@ -66,8 +73,6 @@ public class GameCore {
         if(!ChipsUHC.sp.registerSpreadLoactions(player)) {
             return false;
         }
-
-
 
         return true;
 
