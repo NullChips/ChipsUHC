@@ -32,6 +32,7 @@ public class SpreadPlayers implements Runnable {
     BorderUtils bu = BorderUtils.getInstance();
     ChatUtils cu = ChatUtils.getInstance();
     GameTimeManager gtm = GameTimeManager.getInstance();
+    PlayerUtils pu = PlayerUtils.getInstance();
 
     private int chunkLoadDelay;
     private int maxTries;

@@ -1,4 +1,4 @@
-package me.nullchips.chipsuhc.listeners;
+package me.nullchips.chipsuhc.listeners.player;
 
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import org.bukkit.entity.Player;

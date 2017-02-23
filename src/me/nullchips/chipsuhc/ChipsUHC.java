@@ -4,10 +4,11 @@ import me.nullchips.chipsuhc.commands.*;
 import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.game.StartTimeManager;
-import me.nullchips.chipsuhc.listeners.PlayerChat;
-import me.nullchips.chipsuhc.listeners.PlayerJoin;
-import me.nullchips.chipsuhc.listeners.PlayerLeave;
+import me.nullchips.chipsuhc.listeners.player.PlayerChat;
+import me.nullchips.chipsuhc.listeners.player.PlayerJoin;
+import me.nullchips.chipsuhc.listeners.player.PlayerLeave;
 import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
+import me.nullchips.chipsuhc.listeners.player.PlayerMove;
 import me.nullchips.chipsuhc.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,6 +35,7 @@ public class ChipsUHC extends JavaPlugin {
     private GameCore gc;
     private StartTimeManager stm;
     private FeatureManager fm;
+    private PlayerUtils pu;
 
     public static SpreadPlayers sp;
 
@@ -52,11 +54,15 @@ public class ChipsUHC extends JavaPlugin {
         stm = StartTimeManager.getInstance();
         fm = FeatureManager.getInstance();
         sp = SpreadPlayers.getInstance();
+        pu = PlayerUtils.getInstance();
 
         settingsManager.setup(this);
 
         settingsManager.loadConfigSettings();
 
+        pu.setAllFrozen(false);
+        pu.setCanUnfreezeAll(true);
+        pu.setFreezeAllSender(null);
 
         //ADD ALL POSSIBLE TEAM COLOURS
 
@@ -104,6 +110,11 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("removefromteam").setExecutor(new RemoveFromTeam());
         getCommand("addtoteam").setExecutor(new AddToTeam());
         getCommand("createuhcworld").setExecutor(new CreateUHCWorld());
+        getCommand("freeze").setExecutor(new Freeze());
+        getCommand("unfreeze").setExecutor(new Unfreeze());
+        getCommand("freezeall").setExecutor(new FreezeAll());
+        getCommand("unfreezeall").setExecutor(new UnfreezeAll());
+
 
         //REGISTER LISTENERS
 
@@ -111,6 +122,7 @@ public class ChipsUHC extends JavaPlugin {
         registerEvents(this, new PlayerJoin());
         registerEvents(this, new PlayerLeave());
         registerEvents(this, new PlayerChat());
+        registerEvents(this, new PlayerMove());
 
         Bukkit.getServer().getScheduler().runTaskTimer(this, stm, 20L, 20L);
 

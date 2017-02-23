@@ -46,6 +46,14 @@ commands:
     description: Add a player to a team.
   createuhcworld:
     description: Create the world for the match.
+  freezeall:
+    description: Freeze all players.
+  unfreezeall:
+    description: Unfreeze all players.
+  freeze:
+    description: Freeze a player.
+  unfreeze:
+    description: Unfreeze a player.
 
 permissions:
   uhc.start:

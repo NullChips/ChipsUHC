@@ -61,7 +61,8 @@ public class GameCore {
             p.playSound(p.getLocation(), Sound.BLAZE_DEATH, 1, 10);
             pu.freeze(p);
         }
-
+        pu.setAllFrozen(true);
+        pu.setCanUnfreezeAll(false);
     }
 
     public boolean canStart(Player player) {

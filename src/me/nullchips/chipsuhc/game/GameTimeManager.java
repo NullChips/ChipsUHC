@@ -74,6 +74,8 @@ public class GameTimeManager {
                 p.setGameMode(GameMode.SURVIVAL);
             }
         }
+        pu.setAllFrozen(false);
+        pu.setCanUnfreezeAll(true);
     }
 
 }
