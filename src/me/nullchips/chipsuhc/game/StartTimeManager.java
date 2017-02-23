@@ -1,7 +1,8 @@
-package me.nullchips.chipsuhc.utils;
+package me.nullchips.chipsuhc.game;
 
 import me.nullchips.chipsuhc.ChipsUHC;
-import me.nullchips.chipsuhc.game.GameCore;
+import me.nullchips.chipsuhc.utils.ChatUtils;
+import me.nullchips.chipsuhc.utils.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

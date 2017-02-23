@@ -45,8 +45,15 @@ public class PlayerUtils {
 
     public void freeze(Player p) {
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 0));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 10));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE,10));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 10));
+    }
 
-        //TODO Finish potion effects on freeze.
+    public void unfreeze(Player p) {
+        p.removePotionEffect(PotionEffectType.BLINDNESS);
+        p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+        p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+        p.removePotionEffect(PotionEffectType.SLOW);
     }
 }

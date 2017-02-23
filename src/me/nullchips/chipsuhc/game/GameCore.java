@@ -4,6 +4,7 @@ import me.nullchips.chipsuhc.ChipsUHC;
 import me.nullchips.chipsuhc.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -35,6 +36,12 @@ public class GameCore {
 
     //MAIN STARTING METHOD. WILL CONTAIN ALL AUTOMATIC PROCESSES.
     public void startUHC(Player p) {
+        for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if(!notPlaying.contains(p.getUniqueId().toString())) {
+                player.setGameMode(GameMode.SURVIVAL);
+            }
+        }
+
         cu.message(p, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Starting the countdown!");
         ChipsUHC.setStartTimerRunning(true);
         GameState.setGameState(GameState.STARTING);

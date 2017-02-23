@@ -69,4 +69,7 @@ public class Team {
         this.getMembers().add(s);
 
     }
+
+    //TODO List teams command.
+
 }

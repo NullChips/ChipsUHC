@@ -2,6 +2,7 @@ package me.nullchips.chipsuhc.utils;
 
 import me.nullchips.chipsuhc.ChipsUHC;
 import me.nullchips.chipsuhc.game.GameCore;
+import me.nullchips.chipsuhc.game.GameTimeManager;
 import me.nullchips.chipsuhc.teams.Team;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -30,6 +31,7 @@ public class SpreadPlayers implements Runnable {
     GameCore gc = GameCore.getInstance();
     BorderUtils bu = BorderUtils.getInstance();
     ChatUtils cu = ChatUtils.getInstance();
+    GameTimeManager gtm = GameTimeManager.getInstance();
 
     private int chunkLoadDelay;
     private int maxTries;
@@ -89,14 +91,23 @@ public class SpreadPlayers implements Runnable {
             this.teamIndex ++;
             this.teamsLeftToSpread--;
 
+            long finalDelayLong = (long) chunkLoadDelay;
+
             if(this.teamsLeftToSpread == 0 && playersLeftToSpread == 0) {
-                cu.broadcast(ChatColor.GOLD + "" + ChatColor.BOLD + "Player spread finished.");
-                for(Player p: Bukkit.getServer().getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
-                }
-                this.finishSpread();
-                this.soloPlayersToSpread.clear();
-                this.teamsToSpread.clear();
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ChipsUHC.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+
+                        cu.broadcast(ChatColor.GOLD + "" + ChatColor.BOLD + "Player spread finished.");
+                        for(Player player: Bukkit.getServer().getOnlinePlayers()) {
+                            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1, 7);
+                        }
+                        finishSpread();
+                        soloPlayersToSpread.clear();
+                        teamsToSpread.clear();
+
+                    }
+                },finalDelayLong);
             }
 
         } else if (this.playersLeftToSpread != 0) {
@@ -132,7 +143,7 @@ public class SpreadPlayers implements Runnable {
 
                         cu.broadcast(ChatColor.GOLD + "" + ChatColor.BOLD + "Player spread finished.");
                         for(Player player: Bukkit.getServer().getOnlinePlayers()) {
-                            player.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 7);
+                            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1, 7);
                         }
                         finishSpread();
                         soloPlayersToSpread.clear();
@@ -150,7 +161,7 @@ public class SpreadPlayers implements Runnable {
 
         Bukkit.getServer().getScheduler().cancelTask(taskId);
 
-        gc.startMatch();
+        gtm.startGameCountdown();
 
     }
 
