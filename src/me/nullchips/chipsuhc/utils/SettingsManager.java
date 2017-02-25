@@ -3,7 +3,10 @@ package me.nullchips.chipsuhc.utils;
 import me.nullchips.chipsuhc.features.Feature;
 import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.features.HealthList;
+import me.nullchips.chipsuhc.game.BorderShrink;
+import me.nullchips.chipsuhc.game.BorderShrinkManager;
 import me.nullchips.chipsuhc.game.GameCore;
+import me.nullchips.chipsuhc.game.GameTimeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,6 +35,8 @@ public class SettingsManager {
     private GameCore gc = GameCore.getInstance();
     private SpreadPlayers sp = SpreadPlayers.getInstance();
     private BorderUtils bu = BorderUtils.getInstance();
+    private GameTimeManager gtm = GameTimeManager.getInstance();
+    private BorderShrinkManager bsm = BorderShrinkManager.getInstance();
 
     Plugin p;
     FileConfiguration config;
@@ -77,7 +82,6 @@ public class SettingsManager {
             Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.uhc-world-name in config.yml. Match will be unable to be started.");
             gc.setGameWorldName(null);
         }
-
 
         if(this.getConfig().contains("settings.spread-chunk-delay") && this.getConfig().get("settings.spread-chunk-delay") instanceof Integer) {
             sp.setChunkLoadDelay(this.getConfig().getInt("settings.spread-chunk-delay"));
@@ -125,7 +129,30 @@ public class SettingsManager {
             bu.setStartRadius(1000);
         }
 
+        if(this.getConfig().contains("settings.starter-food-amount") && this.getConfig().get("settings.starter-food-amount") instanceof Integer) {
+            gc.setStarterFoodAmount(this.getConfig().getInt("settings.starter-food-amount"));
+            if(bu.getStartRadius() < 0) {
+                Bukkit.getServer().getLogger().severe(ChatColor.RED + "settings.starter-food-amount in config.yml cannot be less than 0, using default value of 10.");
+                gc.setStarterFoodAmount(10);
+            }
+        } else {
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.starter-food-amount in config.yml. Using default value of 10.");
+            gc.setStarterFoodAmount(10);
+        }
+
+        if(this.getConfig().contains("settings.mins-until-final-heal") && this.getConfig().get("settings.mins-until-final-heal") instanceof Integer) {
+            gtm.setMinsTillFinalHeal(this.getConfig().getInt("settings.mins-until-final-heal"));
+            if(bu.getStartRadius() < 0) {
+                Bukkit.getServer().getLogger().severe(ChatColor.RED + "settings.mins-until-final-heal in config.yml cannot be less than 0, using default value of 10.");
+                gtm.setMinsTillFinalHeal(10);
+            }
+        } else {
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.mins-until-final-heal in config.yml. Using default value of 10.");
+            gtm.setMinsTillFinalHeal(10);
+        }
+
         registerFeatures();
+        registerBorderShrinks();
 
         for(Feature feature : fm.getAllFeatures()) {
             String s = this.getConfig().getString("features." + feature.getConfigId());
@@ -135,7 +162,28 @@ public class SettingsManager {
 
     }
 
-    //TODO Remove world name in config.
+    private void registerBorderShrinks() {
+        int id = 1;
+        for(;;) {
+            if(this.borderShrinkUsable(id)) {
+                bsm.addBorderShrink(new BorderShrink(this.getConfig().getInt("settings.border-shrink-" + id + ".border-size"), this.getConfig().getInt("settings.border-shrink-" + id + ".time-in-game")));
+                Bukkit.getServer().getLogger().info("Added border shrink with size of " + this.getConfig().getInt("settings.border-shrink-" + id + ".border-size")
+                + ". Border shrink takes effect " + this.getConfig().getInt("settings.border-shrink-" + id + ".time-in-game") + " mins into the game.");
+                id++;
+            } else {
+                break;
+            }
+        }
+    }
+
+    private boolean borderShrinkUsable(int id) {
+        if (this.getConfig().contains("settings.border-shrink-" + id + ".border-size") && this.getConfig().get("settings.border-shrink-" + id + ".border-size") instanceof Integer
+                && this.getConfig().contains("settings.border-shrink-" + id + ".time-in-game") && this.getConfig().get("settings.border-shrink-" + id + ".time-in-game") instanceof Integer) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private void registerFeatures() {
         fm.addFeature(new HealthList());

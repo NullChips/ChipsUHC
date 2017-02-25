@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc.commands;
 
+import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import me.nullchips.chipsuhc.utils.GameState;
 import org.bukkit.*;
@@ -15,6 +16,7 @@ import org.bukkit.generator.ChunkGenerator;
 public class CreateUHCWorld implements CommandExecutor {
 
     ChatUtils cu = ChatUtils.getInstance();
+    GameCore gc = GameCore.getInstance();
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String [] args) {
         if(cmd.getName().equalsIgnoreCase("createuhcworld")) {
@@ -63,7 +65,7 @@ public class CreateUHCWorld implements CommandExecutor {
 
     private void createEnd() {
 
-        WorldCreator worldCreator = new WorldCreator("uhc_the_end");
+        WorldCreator worldCreator = new WorldCreator(gc.getGameWorldName() + "_the_end");
         worldCreator.generateStructures(true);
         worldCreator.type(WorldType.NORMAL);
         worldCreator.environment(World.Environment.THE_END);
@@ -74,7 +76,7 @@ public class CreateUHCWorld implements CommandExecutor {
 
     private void createNether() {
 
-        WorldCreator worldCreator = new WorldCreator("uhc_nether");
+        WorldCreator worldCreator = new WorldCreator(gc.getGameWorldName() + "_nether");
         worldCreator.generateStructures(true);
         worldCreator.type(WorldType.NORMAL);
         worldCreator.environment(World.Environment.NETHER);
@@ -83,7 +85,7 @@ public class CreateUHCWorld implements CommandExecutor {
     }
 
     private void createOverworld(long seed) {
-        WorldCreator worldCreator = new WorldCreator("uhc");
+        WorldCreator worldCreator = new WorldCreator(gc.getGameWorldName());
         worldCreator.generateStructures(true);
         worldCreator.seed(seed);
         worldCreator.type(WorldType.NORMAL);

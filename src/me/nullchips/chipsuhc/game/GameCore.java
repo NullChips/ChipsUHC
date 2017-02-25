@@ -33,6 +33,7 @@ public class GameCore {
 
     private String gameWorldName;
     private ArrayList<String> notPlaying = new ArrayList<>();
+    private int starterFoodAmount;
 
     //MAIN STARTING METHOD. WILL CONTAIN ALL AUTOMATIC PROCESSES.
     public void startUHC(Player p) {
@@ -112,5 +113,13 @@ public class GameCore {
 
     public void startMatch() {
         //TODO Create start match logic for after players have been spread.
+    }
+
+    public int getStarterFoodAmount() {
+        return starterFoodAmount;
+    }
+
+    public void setStarterFoodAmount(int starterFoodAmount) {
+        this.starterFoodAmount = starterFoodAmount;
     }
 }

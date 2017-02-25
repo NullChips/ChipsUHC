@@ -4,11 +4,9 @@ import me.nullchips.chipsuhc.ChipsUHC;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import me.nullchips.chipsuhc.utils.GameState;
 import me.nullchips.chipsuhc.utils.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by Tommy on 22/02/2017.
@@ -35,6 +33,9 @@ public class GameTimeManager {
 
     private int countdownTaskID;
     private int gameTimerTaskID;
+
+    private int minsTillFinalHeal;
+    private int secondsTillFinalHeal;
 
     public void startGameCountdown() {
         this.secondsUntilStart = 30;
@@ -72,10 +73,66 @@ public class GameTimeManager {
                 pu.heal(p);
                 pu.feed(p);
                 p.setGameMode(GameMode.SURVIVAL);
+                p.setExp(0F);
+                pu.clearInventory(p);
+                if(gc.getStarterFoodAmount() > 0) {
+                    p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, gc.getStarterFoodAmount()));
+                }
             }
         }
         pu.setAllFrozen(false);
         pu.setCanUnfreezeAll(true);
+
+        cu.broadcast(ChatColor.GOLD + "Time until final heal: " + getMinsTillFinalHeal());
+
+        setSecondsTillFinalHeal(getMinsTillFinalHeal() * 60);
+        startGameTimer();
     }
 
+    private void startGameTimer() {
+        gameTimerTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChipsUHC.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+
+                //SCOREBOARD UPDATE
+                if(secondsInGame %5 == 0) {
+                    //TODO Update scoreboard for each player.
+                }
+
+                //FINAL HEAL CODE
+                if(getSecondsTillFinalHeal() >= 0) {
+                    if(getSecondsTillFinalHeal() == 60 || getSecondsTillFinalHeal() == 30 || getSecondsTillFinalHeal() == 20 || getSecondsTillFinalHeal() == 15 || getSecondsTillFinalHeal() <= 10) {
+                        if(getSecondsTillFinalHeal() > 0) {
+                            cu.broadcast(ChatColor.GOLD + "" + getSecondsTillFinalHeal() + " seconds until final heal!");
+                        } else if (getSecondsTillFinalHeal() == 0) {
+                            for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                pu.heal(p);
+                                p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                            }
+                            cu.broadcast(ChatColor.GOLD + "Final heal has been given.");
+                        }
+                    }
+                    setSecondsTillFinalHeal(getSecondsTillFinalHeal() - 1);
+                }
+
+                secondsInGame++;
+            }
+        }, 20L, 20L);
+    }
+
+    public int getMinsTillFinalHeal() {
+        return minsTillFinalHeal;
+    }
+
+    public void setMinsTillFinalHeal(int minsTillFinalHeal) {
+        this.minsTillFinalHeal = minsTillFinalHeal;
+    }
+
+    public int getSecondsTillFinalHeal() {
+        return secondsTillFinalHeal;
+    }
+
+    public void setSecondsTillFinalHeal(int secondsTillFinalHeal) {
+        this.secondsTillFinalHeal = secondsTillFinalHeal;
+    }
 }

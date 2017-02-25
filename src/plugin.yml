@@ -54,6 +54,8 @@ commands:
     description: Freeze a player.
   unfreeze:
     description: Unfreeze a player.
+  bordershrinks:
+    description: View all the border shrinks.
 
 permissions:
   uhc.start:
@@ -95,3 +97,6 @@ permissions:
   uhc.createworld:
     description: Create the world for the match.
     deafult: op
+  uhc.bordershrinks:
+    description: View border shrinks.
+    deafult: true

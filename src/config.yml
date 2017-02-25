@@ -1,11 +1,28 @@
 settings:
   message-prefix: '&c[&6Chips&f&lUHC&c]' #Prefix shown before each message.
-  uhc-world-name: 'uhc' #Name of world in which players are spread to.
+  uhc-world-name: 'uhc' #Name of world that is saved for the game to take place in.
   spread-chunk-delay: 30 #The delay in ticks between the loading of chunks at each location. Set this number higher if you experince lagging or crashes when spreading players.
   spread-max-tries: 750 #The maximum amount of attempts to find spread locations before the spread is cancelled.
   spread-min-distance: 100 #The minimum amount of distance between players when they have been spread.
+  starter-food-amount: 10 #The amount of steak that is given to a player when the game starts.
+  mins-until-final-heal: 10 #The time in minutes before the final heal.
 
   borders:
     start-radius: 1000
+
+  #Below are the shrinks that are made to the border during the game. When adding a new shrink, it should be named as 'border-shrink-#' with #being the number of the shrink.
+  #The number of the shrink should go up in increments of 1, if they go up in any higher increments, then they will not be registered.
+  #The border size is the diameter of the border, the time-in-game is the time in minutes within the game that the border should shrink.
+  #For example, setting these values to 2000 and 10 respectively, would shrink the border to be 2000x2000 blocks, 10 minutes into the game.
+  #You can use the command /bordershrinks in game to check that the shrinks have been added correctly.
+
+  border-shrink-1:
+    border-size: 700
+    time-in-game: 60
+  border-shrink-2:
+    border-size: 500
+    time-in-game: 90
+
+#Below is the list of features that can be enabled or disabled to enhance the game.
 features:
   tab-list-health: 'true'
