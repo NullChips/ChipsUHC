@@ -105,3 +105,8 @@ permissions:
   uhc.reloadconfig:
     description: Reload the config.
     deafault: op
+  uhc.breakblock:
+    description: Break blocks at spawn and during scatter.
+    default: op
+  uhc.hostchat:
+    description: Enables host prefix for a player.

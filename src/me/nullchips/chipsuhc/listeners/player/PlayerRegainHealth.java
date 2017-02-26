@@ -1,5 +1,6 @@
-package me.nullchips.chipsuhc.listeners;
+package me.nullchips.chipsuhc.listeners.player;
 
+import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.utils.GameState;
 import me.nullchips.chipsuhc.utils.TeamUtils;
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
  */
 public class PlayerRegainHealth implements Listener {
 
-    TeamUtils tu = TeamUtils.getInstance();
+    GameCore gc = GameCore.getInstance();
 
     @EventHandler
     public void onPlayerRegainHealth(EntityRegainHealthEvent e) {
@@ -27,7 +28,7 @@ public class PlayerRegainHealth implements Listener {
             return;
         }
 
-        if(tu.hasTeam(p)) {
+        if(!gc.getNotPlaying().contains(p.getUniqueId().toString())) {
             e.setCancelled(true);
         }
     }

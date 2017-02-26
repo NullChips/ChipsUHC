@@ -1,6 +1,8 @@
 package me.nullchips.chipsuhc.listeners.player;
 
 import me.nullchips.chipsuhc.utils.ChatUtils;
+import me.nullchips.chipsuhc.utils.TeamUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,7 +30,13 @@ public class PlayerChat implements Listener {
             return;
         }
 
-        //TODO Format chat with prefixes of teams etc.
+        if(p.hasPermission("uhc.hostchat")) {
+            e.setFormat(ChatColor.RED + "" + ChatColor.BOLD + "[" + ChatColor.AQUA + ChatColor.BOLD + "Host" + ChatColor.RED + ChatColor.BOLD + "] "
+                    + ChatColor.GREEN + "%s" + ChatColor.GOLD + " >> " + ChatColor.WHITE + "%s");
+            return;
+        }
+
+        e.setFormat(ChatColor.LIGHT_PURPLE + "%s" + ChatColor.GOLD + " >> " + ChatColor.WHITE + "%s");
 
     }
 

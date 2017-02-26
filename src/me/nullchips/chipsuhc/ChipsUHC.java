@@ -4,11 +4,9 @@ import me.nullchips.chipsuhc.commands.*;
 import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.game.StartTimeManager;
-import me.nullchips.chipsuhc.listeners.player.PlayerChat;
-import me.nullchips.chipsuhc.listeners.player.PlayerJoin;
-import me.nullchips.chipsuhc.listeners.player.PlayerLeave;
-import me.nullchips.chipsuhc.listeners.PlayerRegainHealth;
-import me.nullchips.chipsuhc.listeners.player.PlayerMove;
+import me.nullchips.chipsuhc.listeners.block.BlockBreak;
+import me.nullchips.chipsuhc.listeners.player.*;
+import me.nullchips.chipsuhc.listeners.player.PlayerRegainHealth;
 import me.nullchips.chipsuhc.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -125,6 +123,8 @@ public class ChipsUHC extends JavaPlugin {
         registerEvents(this, new PlayerLeave());
         registerEvents(this, new PlayerChat());
         registerEvents(this, new PlayerMove());
+        registerEvents(this, new PlayerDamage());
+        registerEvents(this, new BlockBreak());
 
         Bukkit.getServer().getScheduler().runTaskTimer(this, stm, 20L, 20L);
 
