@@ -1,3 +1,5 @@
+#   Anything followed by a hashtag is a comment, showing what the setting does. Editing these has no effect on the plugin.
+
 settings:
   message-prefix: '&c[&6Chips&f&lUHC&c]' #Prefix shown before each message.
   uhc-world-name: 'uhc' #Name of world that is saved for the game to take place in.
@@ -8,7 +10,7 @@ settings:
   mins-until-final-heal: 10 #The time in minutes before the final heal.
 
   borders:
-    start-radius: 1000
+    start-size: 1000 #The start of the border at the start
 
   #Below are the shrinks that are made to the border during the game. When adding a new shrink, it should be named as 'border-shrink-#' with #being the number of the shrink.
   #The number of the shrink should go up in increments of 1, if they go up in any higher increments, then they will not be registered.

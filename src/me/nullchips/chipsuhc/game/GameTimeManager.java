@@ -27,6 +27,7 @@ public class GameTimeManager {
     ChatUtils cu = ChatUtils.getInstance();
     PlayerUtils pu = PlayerUtils.getInstance();
     GameCore gc = GameCore.getInstance();
+    BorderShrinkManager bsm = BorderShrinkManager.getInstance();
 
     private int secondsUntilStart;
     private int secondsInGame;
@@ -83,7 +84,7 @@ public class GameTimeManager {
         pu.setAllFrozen(false);
         pu.setCanUnfreezeAll(true);
 
-        cu.broadcast(ChatColor.GOLD + "Time until final heal: " + getMinsTillFinalHeal());
+        cu.broadcast(ChatColor.GOLD + "Time until final heal: " + ChatColor.AQUA + getMinsTillFinalHeal() + " minutes.");
 
         setSecondsTillFinalHeal(getMinsTillFinalHeal() * 60);
         startGameTimer();
@@ -115,6 +116,22 @@ public class GameTimeManager {
                     setSecondsTillFinalHeal(getSecondsTillFinalHeal() - 1);
                 }
 
+                //BORDER SHRINK CODE
+                for(BorderShrink bs : bsm.getAllShrinks()) {
+                    if(bs.getTimeUntilShrink() == 0) {
+                        //TODO Write border code.
+                        cu.broadcast(ChatColor.GREEN + "The borders have shrunk to " + bs.getBorderSize() + "x" + bs.getBorderSize());
+                        for(Player p: Bukkit.getServer().getOnlinePlayers()) {
+                            p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 10);
+                        }
+                        bsm.removeBorderShrink(bs);
+                        bsm.setActiveShrink(bs);
+                    } else if(bs.getTimeUntilShrink() == 60 || bs.getTimeUntilShrink() == 30 || bs.getTimeUntilShrink() == 20 || bs.getTimeUntilShrink() == 15 || bs.getTimeUntilShrink() <= 10) {
+                        cu.broadcast(ChatColor.GREEN  +"Borders shrinking to " + ChatColor.AQUA + bs.getBorderSize() + "x" + bs.getBorderSize() +
+                                ChatColor.AQUA + " in " + ChatColor.AQUA + bs.getTimeUntilShrink() + ChatColor.GREEN + " seconds.");
+                    }
+                    bs.setTimeUntilShrink(bs.getTimeUntilShrink() - 1);
+                }
                 secondsInGame++;
             }
         }, 20L, 20L);

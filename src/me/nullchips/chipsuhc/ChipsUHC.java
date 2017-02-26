@@ -115,6 +115,7 @@ public class ChipsUHC extends JavaPlugin {
         getCommand("freezeall").setExecutor(new FreezeAll());
         getCommand("unfreezeall").setExecutor(new UnfreezeAll());
         getCommand("bordershrinks").setExecutor(new BorderShrinksCommand());
+        getCommand("reloadconfig").setExecutor(new ReloadConfigCommand());
 
 
         //REGISTER LISTENERS

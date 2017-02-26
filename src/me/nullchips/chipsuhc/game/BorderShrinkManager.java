@@ -40,4 +40,8 @@ public class BorderShrinkManager {
     public void setActiveShrink(BorderShrink activeShrink) {
         this.activeShrink = activeShrink;
     }
+
+    public void clearShrinks() {
+        this.allShrinks.clear();
+    }
 }

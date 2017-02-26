@@ -56,6 +56,8 @@ commands:
     description: Unfreeze a player.
   bordershrinks:
     description: View all the border shrinks.
+  reloadconfig:
+    description: Reload the config.
 
 permissions:
   uhc.start:
@@ -100,3 +102,6 @@ permissions:
   uhc.bordershrinks:
     description: View border shrinks.
     deafult: true
+  uhc.reloadconfig:
+    description: Reload the config.
+    deafault: op

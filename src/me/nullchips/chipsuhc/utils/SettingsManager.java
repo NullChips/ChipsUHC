@@ -1,5 +1,6 @@
 package me.nullchips.chipsuhc.utils;
 
+import me.nullchips.chipsuhc.ChipsUHC;
 import me.nullchips.chipsuhc.features.Feature;
 import me.nullchips.chipsuhc.features.FeatureManager;
 import me.nullchips.chipsuhc.features.HealthList;
@@ -46,19 +47,11 @@ public class SettingsManager {
         config = p.getConfig();
         config.options().copyDefaults(true);
         cfile = new File(p.getDataFolder(), "config.yml");
-        saveConfig();
+        ChipsUHC.getInstance().saveDefaultConfig();
     }
 
     public FileConfiguration getConfig() {
         return config;
-    }
-
-    public void saveConfig() {
-        try {
-            config.save(cfile);
-        } catch (IOException e) {
-            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Unable to create config.yml");
-        }
     }
 
     public PluginDescriptionFile getDesc() {
@@ -118,14 +111,14 @@ public class SettingsManager {
 
 
 
-        if(this.getConfig().contains("settings.borders.start-radius") && this.getConfig().get("settings.borders.start-radius") instanceof Integer) {
-            bu.setStartRadius(this.getConfig().getInt("settings.borders.start-radius"));
+        if(this.getConfig().contains("settings.borders.start-size") && this.getConfig().get("settings.borders.start-size") instanceof Integer) {
+            bu.setStartRadius(this.getConfig().getInt("settings.borders.start-size"));
             if(bu.getStartRadius() < 0) {
-                Bukkit.getServer().getLogger().severe(ChatColor.RED + "settings.borders.start-radius in config.yml cannot be less than 1, using default value of 1000.");
+                Bukkit.getServer().getLogger().severe(ChatColor.RED + "settings.borders.start-size in config.yml cannot be less than 1, using default value of 1000.");
                 bu.setStartRadius(1000);
             }
         } else {
-            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.borders.start-radius in config.yml. Using default value of 1000.");
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not find settings.borders.start-size in config.yml. Using default value of 1000.");
             bu.setStartRadius(1000);
         }
 
@@ -163,6 +156,7 @@ public class SettingsManager {
     }
 
     private void registerBorderShrinks() {
+        bsm.clearShrinks();
         int id = 1;
         for(;;) {
             if(this.borderShrinkUsable(id)) {

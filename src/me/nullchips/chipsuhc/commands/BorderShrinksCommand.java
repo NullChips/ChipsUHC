@@ -2,7 +2,6 @@ package me.nullchips.chipsuhc.commands;
 
 import me.nullchips.chipsuhc.game.BorderShrink;
 import me.nullchips.chipsuhc.game.BorderShrinkManager;
-import me.nullchips.chipsuhc.game.GameCore;
 import me.nullchips.chipsuhc.utils.BorderUtils;
 import me.nullchips.chipsuhc.utils.ChatUtils;
 import org.bukkit.ChatColor;

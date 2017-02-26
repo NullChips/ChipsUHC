@@ -9,11 +9,13 @@ public class BorderShrink {
         this.borderSize = borderSize;
         this.shrinkTimeMins = shrinkTimeMins;
         this.shrinkTimeSeconds = shrinkTimeMins * 60;
+        this.timeUntilShrink = shrinkTimeMins * 60;
     }
 
     private final int borderSize;
     private final int shrinkTimeMins;
     private final int shrinkTimeSeconds;
+    private int timeUntilShrink;
 
     public int getBorderSize() {
         return borderSize;
@@ -25,5 +27,13 @@ public class BorderShrink {
 
     public int getShrinkTimeSeconds() {
         return shrinkTimeSeconds;
+    }
+
+    public int getTimeUntilShrink() {
+        return timeUntilShrink;
+    }
+
+    public void setTimeUntilShrink(int timeUntilShrink) {
+        this.timeUntilShrink = timeUntilShrink;
     }
 }

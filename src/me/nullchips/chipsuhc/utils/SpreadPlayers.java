@@ -194,8 +194,6 @@ public class SpreadPlayers implements Runnable {
                         locationOkay = false;
                     }
 
-                    spreadSender.sendMessage(locationBlock.getType().name());
-
                     int teleportY = blockLocation.getBlockY() + 1;
 
                     Location newLocation = new Location(gameWorld, locationX, teleportY, locationZ);
